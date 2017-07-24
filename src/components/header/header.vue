@@ -32,7 +32,7 @@
 			<img :src="seller.avatar" width="100%" height="100%">
 		</div>
 
-		<div class="detail" v-show="detailshow">
+		<div class="detail" v-show="detailshow" transition="fade" >
 			<div class="detail-wrapper clearfix">
 				<div class="detail-main">
 					<h1 class="name">{{seller.name}}</h1>
@@ -47,8 +47,17 @@
 					<ul class="supports" v-if="seller.supports">
 						<li class="support-item" v-for="(item ,index) in seller.supports">
 							<span class="icon" :class="classMap[seller.supports[index].type]"></span>
+							<span class="text">{{item.description}}</span>
 						</li>
 					</ul>
+					<div class="title">
+						<div class="line"></div>
+						<div class="text">商家公告</div>
+						<div class="line"></div>
+					</div>
+					<div class="bulletin">
+						<p class="content">{{seller.bulletin}}</p>
+					</div>
 				</div>
 			</div>
 			<div class="detail-close" @click="detailshow=false"><span class="iconClose">X</span></div>
@@ -239,7 +248,16 @@ import star from '../star/star';
 		height: 100%;
 		overflow: auto;
 		background: rgba(7,17,27,0.8);
-		/*filter:blur(10px);*/
+		transition:  all 0.5s;
+		backdrop-filter:blur(10px;);
+	}
+	.detail .fade-transition{
+		opacity: 1;
+		background: rgba(7,17,27,0.8);
+	}
+	.detail .fade-enter,.detail .fade-leave{
+		opacity: 0;
+		background: rgba(7,17,27,0);
 	}
 	.detail-wrapper{
 		min-height: 100%;
@@ -292,5 +310,42 @@ import star from '../star/star';
 		padding: 0 12px;
 		font-size: 14px;
 		font-weight: 700;
+	}
+	.supports{
+		width: 80%;
+		margin: 0 auto
+
+	}
+	.supports .support-item{
+		list-style: none;
+		padding: 0 12px ;
+		margin-bottom: 12px;
+		font-size: 0;
+
+	}
+	.support-item:last_child{
+		margin-bottom: 0;
+	}
+	.supports .support-item .icon{
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+		vertical-align: top;
+		margin-right: 6px;
+		background-size: 16px 16px;
+		background-repeat: no-repeat;
+	}
+	.supports .support-item .text{
+		line-height: 16px;
+		font-size: 12px;
+	}
+	.bulletin{
+		width: 80%;
+		margin: 0 auto	
+	}
+	.bulletin .content{
+		font-size: 12px;
+		padding: 0 12px; 
+		line-height: 24px;
 	}
 </style>
