@@ -19,7 +19,7 @@
 				</div>
 				<div class="support-count" v-if="seller.supports" @click="detailshow=true">
 				<span class="count">{{seller.supports.length}}个</span>
-				<i class="icon-keyboard_arrow_right">></i>
+				<i class="icon-keyboard_arrow_right"></i>
 			</div>	
 			</div>
 			
@@ -60,7 +60,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="detail-close" @click="detailshow=false"><span class="iconClose">X</span></div>
+			<div class="detail-close" @click="detailshow=false"><span class="icon-close"></span></div>
 		</div>
 	</div>
 </template>
@@ -86,10 +86,11 @@ import star from '../star/star';
 			star
 		}
 	}
+	
 </script>
 
 
-<style>
+<style scoped  >
 	.clearfix{
 	display: inline-block;
 
@@ -276,6 +277,7 @@ import star from '../star/star';
 		clear: both;
 		font-size: 32px;
 		cursor: pointer;
+		color: #fff;
 	}
 	.iconClose{
 		display: inline-block;

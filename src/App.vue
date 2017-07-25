@@ -12,7 +12,7 @@
         <router-link to="/seller" class="item_link">商家</router-link>
       </div>
     </div>
-   <router-view></router-view>
+   <router-view :seller="seller"></router-view>
   
   </div>
 </template>
@@ -30,7 +30,7 @@ export default {
   },
   created:function(){
      this.$nextTick(function () {
-    this.$http.get('/api/seller').then((responed) =>{
+      this.$http.get('/api/seller').then((responed) =>{
       responed = responed.body
       
       this.seller = responed.data
@@ -50,6 +50,7 @@ export default {
 </script>
 
 <style type="text/css">
+
  #app .tab{
   display: flex;
   width: 100%;

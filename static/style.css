@@ -23,9 +23,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-*{
-  background-color: red;
-}
+
 .icon-add_circle:before {
   content: "\e900";
 }
@@ -35,6 +33,7 @@
 .icon-check_circle:before {
   content: "\e902";
 }
+
 .icon-close:before {
   content: "\e903";
 }
