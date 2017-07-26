@@ -25,20 +25,24 @@
 						 			<span class="new">{{food.price}}</span>
 						 			<span class="old" v-show="food.ordPrice"></span>
 						 		</div>
+						 		<div class="cartcontrolwrapper" >
+						 			<cartcontrol :food="food"></cartcontrol>
+						 		</div>
 						 	</div>
 						 </li>
 					</ul>
 				</li>
 			</ul>
 		</div>
-		<shopcart :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>	
+		<shopcart :select-foods="selectFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>	
 		
 	</div>
 </template>
 
 
 <script type="text/javascript">
-import shopcart from '../shopcart/shopcart'
+import shopcart from '../shopcart/shopcart';
+import cartcontrol from '../cartcontrol/cartcontrol'
 	export default{
 		data(){
 			return{
@@ -60,7 +64,20 @@ import shopcart from '../shopcart/shopcart'
 		    })
 		  })
 		},
-		components:{shopcart}
+		computed:{
+			selectFoods(){
+				let foods =[];
+				this.goods.forEach((good)=>{
+					good.foods.forEach((food)=>{
+						if(food.count){
+							foods.push(food)
+						}
+					})
+				})
+				return foods;
+			}
+		},
+		components:{shopcart,cartcontrol}
 	}
 </script>
 
@@ -116,7 +133,7 @@ import shopcart from '../shopcart/shopcart'
 	}
 	.food-item{
 		display: flex;
-		
+		position: relative;
 		margin: 18px;
 
 		padding-bottom: 1px solid rgba(7,17,27,0.1);
@@ -165,5 +182,10 @@ import shopcart from '../shopcart/shopcart'
 	.foods-wrapper{
 		flex: 1;
 		overflow: auto;
+	}
+	.cartcontrolwrapper{
+		position: absolute;
+		right: 0;
+		bottom: 12px;
 	}
 </style>

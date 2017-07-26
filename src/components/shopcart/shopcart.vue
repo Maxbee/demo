@@ -2,20 +2,26 @@
 	<div class="shopcart">
 		<div class="shopcontent">
 			<div class="content-left">
-				<div class="logo-wrap">
-					<div class="logo">
+				<div class="logo-wrap" >
+					<div class="logo" :class="{'lgheightlight':totalCount>0}">
 						<span class="shopcartico icon-shopping_cart" ></span>
 					</div>
+					<div class="cartnum"  v-show="totalCount>0">{{totalCount}}</div>
 				</div>
 
-				<div class="shopprice">{{totalPrice}}元</div>
-				<div class="shopdesc">另需配送费￥{{deliveryPrice}}元</div>
+				<div class="shopprice" :class="{'aheightlight':totalPrice>0}">{{totalPrice}}元</div>
+				<div class="shopdesc" :class="{'descheightlight':totalPrice>=minPrice}">另需配送费￥{{deliveryPrice}}元</div>
 			</div>
 			<div class="content-right">
-				<div class="pay">
-					￥{{minPrice}}元起送
+				<div class="pay" :class="{'canPay':totalPrice>=minPrice}">
+					{{payDes}}
 				</div>	
 
+			</div>
+		</div>
+		<div class="ball-container">
+			<div v-for="ball in balls" v-show="ball.shaw">
+				<div class="innerball"></div>
 			</div>
 		</div>
 	</div>
@@ -27,7 +33,7 @@
 	export default{
 		data(){
 			return{
-
+				balls:[{show:false},{show:false},{show:false},{show:false}]
 			}
 		},
 		props:{
@@ -61,6 +67,17 @@
  				this.selectFoods.forEach((food)=>{
  					count+= food.count;
  				})
+ 				return count;
+ 			},
+ 			payDes(){
+ 				if (this.totalPrice===0) {
+ 					return `￥'${this.minPrice}元起送`
+ 				}else if(this.totalPrice<this.minPrice){
+ 					let  diff = this.minPrice -this.totalPrice;
+ 					return `还差￥${diff}元起送`;
+ 				}else{
+ 					return '结算';
+ 				}
  			}
 		}
 	};
@@ -114,6 +131,10 @@
 		color: #80858a;
 		line-height: 44px;
 	}
+	.logo .heightlight{
+		background-color: rgb(0,160,220);
+
+	}
 	.shopprice{
 		display: inline-block;
 		vertical-align: top;
@@ -126,6 +147,9 @@
 		margin-top: 12px;
 		color: rgba(255,255,255,0.1);
 	}
+	.lgheightlight{
+		background-color: rgb(0,160,220);
+	}
 	.shopdesc{
 		display: inline-block;
 		line-height: 24px;
@@ -133,6 +157,9 @@
 		vertical-align: top;
 		color: rgba(255,255,255,0.1);
 		font-size: 10px;
+	}
+	.descheightlight{
+		color: #fff;
 	}
 	.pay{
 		height: 48px;
@@ -142,5 +169,36 @@
 		font-weight: 700;
 		color: rgba(255,255,255,0.1);
 		background-color: #2b333b;
+	}
+	.cartnum{
+		position: absolute;
+		top: 0 ;
+		right: 0;
+		width: 24px;
+		height: 16px;
+		line-height: 16px;
+		text-align: center;
+		border-radius: 16px;
+		font-size: 9px;
+		font-weight: 700;
+		color: #fff;
+		background-color: rgb(240,20,20);
+		box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4)
+	}
+	.canPay{
+		background-color: #00b43c;
+		color:#fff;
+	}
+	.aheightlight{
+		color: #fff;
+	}
+	.ball-container{
+
+	}
+	.immerball{
+		position: fixed;
+		left: 32px;
+		bottom: 22px;
+		z-index: 200;
 	}
 </style>
