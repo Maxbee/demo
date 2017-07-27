@@ -1,6 +1,6 @@
 <template>
-	<div class="shopcart" @click="toggleshow">
-		<div class="shopcontent">
+	<div class="shopcart" @click.stop="toggleshow" >
+		<div class="shopcontent" >
 			<div class="content-left">
 				<div class="logo-wrap" >
 					<div class="logo" :class="{'lgheightlight':totalCount>0}">
@@ -12,7 +12,7 @@
 				<div class="shopprice" :class="{'aheightlight':totalPrice>0}">{{totalPrice}}元</div>
 				<div class="shopdesc" :class="{'descheightlight':totalPrice>=minPrice}">另需配送费￥{{deliveryPrice}}元</div>
 			</div>
-			<div class="content-right">
+			<div class="content-right" @click.stop="toPay">
 				<div class="pay" :class="{'canPay':totalPrice>=minPrice}">
 					{{payDes}}
 				</div>	
@@ -24,8 +24,8 @@
 				<div class="innerball"></div>
 			</div>
 		</div>
-		<transition name="moveup">
-			<div class="shopcartlist" v-show="listshow">
+		<transition  name="moveup">
+			<div class="shopcartlist" :class="{'listshow':listshow}" @click.stop="">
 			<div class="list-head">
 				<h1 class="listtitle">购物车</h1>
 				<span class="clearcart">清空</span>
@@ -44,7 +44,6 @@
 				</ul>
 			</div>
 		</div>
-			
 		</transition>
 	</div>
 
@@ -84,6 +83,9 @@ import cartcontrol from '../cartcontrol/cartcontrol'
 					return;
 				}
 				this.fold = !this.fold
+			},
+			toPay(){
+				alert('pay')
 			}
 		},
 		computed:{
@@ -249,6 +251,7 @@ import cartcontrol from '../cartcontrol/cartcontrol'
 		left: 0;
 		width: 100%;
 		z-index:-1; 
+		transition: all 0.5s;
 	}
 	.list-head{
 		height: 40px;
@@ -270,8 +273,9 @@ import cartcontrol from '../cartcontrol/cartcontrol'
 	.list-content{
 		padding: 0 18px;
 		max-height:217px;
-		overflow: hidden;
+		overflow: auto;
 		background-color: #fff;
+
 	}
 	.listfood{
 		position: relative;
@@ -298,6 +302,9 @@ import cartcontrol from '../cartcontrol/cartcontrol'
 		right: 0;
 		bottom: 6px;
 	}
+	.listshow{
+		transform: translate3d(0,-100%,0);
+	}
 
 /*	.moveup-enter,.moveup-enter-active {
 		transform: translate3d(0,-100%,0);
@@ -308,18 +315,18 @@ import cartcontrol from '../cartcontrol/cartcontrol'
 	  	transform: translate3d(0,0,0);
 		transition: all 0.5s;
 }*/
-.moveup-enter-active,.moveup-leave-active {
+.moveup-enter-active, .moveup-leave-active{
 	 transition: all 1s;
  transform: translate3d(0,-100%,0);
 
 }
 
-.moveup-fade-enter, .moveup-leave-to{
+/*{
 	transition: all 1s;
 	transform: translate3d(0,0,0);
 		
 
-}
+}*/
 /*.moveup-leave-active {
  transform: translate3d(0,0,0);
 		transition: all 0.5s;

@@ -12,7 +12,7 @@
 				<li class="food-list" v-for="item in goods">
 					<h1 class="food-tittle">{{item.name}}</h1>
 					<ul>
-						 <li class="food-item" v-for="food in item.foods">
+						 <li class="food-item" v-for="food in item.foods" @click="selectFood(food,$event)">
 						 	<div class="food-icon"><img width="57" height="57" :src="food.icon"></div>
 						 	<div class="food-content">
 						 		<h1 class="foodname">{{food.name}}</h1>
@@ -36,22 +36,32 @@
 		</div>
 		<shopcart :select-foods="selectFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>	
 		
+		<food  :food="selectedFood" ref="food"></food>
+		
 	</div>
 </template>
 
 
 <script type="text/javascript">
 import shopcart from '../shopcart/shopcart';
-import cartcontrol from '../cartcontrol/cartcontrol'
+import cartcontrol from '../cartcontrol/cartcontrol';
+import food from '../food/food';
 	export default{
 		data(){
 			return{
-				goods:[]
+				goods:[],
+				selectedFood:{}
 			}
 		},
 		props:{
 			seller:{
 				type:Object
+			}
+		},
+		methods:{
+			selectFood(food,event){
+				this.selectedFood = food;
+				this.$refs.food.show();
 			}
 		},
 		created:function(){
@@ -77,7 +87,7 @@ import cartcontrol from '../cartcontrol/cartcontrol'
 				return foods;
 			}
 		},
-		components:{shopcart,cartcontrol}
+		components:{shopcart,cartcontrol,food}
 	}
 </script>
 
@@ -188,4 +198,8 @@ import cartcontrol from '../cartcontrol/cartcontrol'
 		right: 0;
 		bottom: 12px;
 	}
+
+
+
+
 </style>

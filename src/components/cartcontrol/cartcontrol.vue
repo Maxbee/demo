@@ -1,8 +1,8 @@
 <template>
 	<div class="cartcontrol">
-		<transition name="move"><div class="cart-decrease icon-remove_circle_outline" v-show="food.count>0" @click="decreaseOne" ref="box"></div></transition>
+		<transition name="move"><div class="cart-decrease icon-remove_circle_outline box" v-show="food.count>0" @click.stop="decreaseOne" ref="box"></div></transition>
 		<div class="cart-count"  v-show="food.count>0">{{food.count}}</div>
-		<div class="add icon-add_circle" @click="addOne" ></div>
+		<div class="add icon-add_circle" @click.stop="addOne" ></div>
 	</div>	
 </template>
 
@@ -18,7 +18,9 @@
 		
 		methods:{
 			addOne:function(){
-				// alert(this.$refs.box)
+				this.$nextTick(function(){
+				// console.log(this.$refs.box.getElementsByClassName('box'))
+			})
 				// alert(this.$els.aa)
 				if(!this.food.count){	
 					this.$set(this.food,'count',1)	
